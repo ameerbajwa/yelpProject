@@ -12,24 +12,27 @@ class RestAPIManager {
     
     static let sharedInstance = RestAPIManager()
     
-    func httpRequest() {
+    func httpRequest(apiUrlString: String, onSuccess: @escaping (Data) -> Void, onFailure: @escaping (Error) -> Void) {
         
-        let apiUrl = URL(string: "https://api.yelp.com/v3/autocomplete?text=don&latitude=37.786882&longitude=-122.399972")
+        let baseUrlString = "https://api.yelp.com/v3"
+        let urlString = baseUrlString + apiUrlString
+        
+        let apiUrl = URL(string: urlString)
         var request = URLRequest(url: apiUrl!)
         
         request.httpMethod = "GET"
-        request.addValue("Bearer pT5wrgK6nHwAr1lS3VMCyoSvD55nD5X1j-vGeui3FX59Y35-nXa20ADXd-xeya19QL4G4LDkc7Ew18hMmUxpse28kxnBcudq-i17Kin0q_qRC0JvLQBiAD2U6cLcYHYx", forHTTPHeaderField: "Authorization")
+        request.addValue("Bearer \(APIKey.yelpAPIKey)", forHTTPHeaderField: "Authorization")
         
         let session = URLSession.shared
         let dataTask = session.dataTask(with: request) { (data, response, error) in
-            if let safeData = data {
-                do {
-                    let autocomplete = try JSONDecoder().decode(Autocomplete.self, from: safeData)
-                    print(autocomplete)
-                } catch {
-                    print("unexpected error: \(error)")
-                }
+            
+            guard let safeData = data, error == nil else {
+                print("error: \(error!)")
+                onFailure(error!)
+                return
             }
+            onSuccess(safeData)
+            
         }
         
         dataTask.resume()

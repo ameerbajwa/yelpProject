@@ -22,8 +22,3 @@ struct AutocompleteBusiness: Codable {
     var id: String
     var name: String
 }
-
-//struct AutocompleteCategory: Codable {
-//    var alias: String
-//    var title: String
-//}
