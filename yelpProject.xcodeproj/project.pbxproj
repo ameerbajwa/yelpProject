@@ -15,6 +15,9 @@
 		DE2B235E268D415700755ECD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE2B235D268D415700755ECD /* Assets.xcassets */; };
 		DE2B2361268D415700755ECD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE2B235F268D415700755ECD /* LaunchScreen.storyboard */; };
 		DE2B236C268D415700755ECD /* yelpProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2B236B268D415700755ECD /* yelpProjectTests.swift */; };
+		DE2B2378268D430E00755ECD /* RestAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2B2377268D430E00755ECD /* RestAPIManager.swift */; };
+		DE2B237B268D474700755ECD /* Businesses.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2B237A268D474700755ECD /* Businesses.swift */; };
+		DE2B237D268D483400755ECD /* Autocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2B237C268D483400755ECD /* Autocomplete.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +43,9 @@
 		DE2B2367268D415700755ECD /* yelpProjectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = yelpProjectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE2B236B268D415700755ECD /* yelpProjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = yelpProjectTests.swift; sourceTree = "<group>"; };
 		DE2B236D268D415700755ECD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DE2B2377268D430E00755ECD /* RestAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestAPIManager.swift; sourceTree = "<group>"; };
+		DE2B237A268D474700755ECD /* Businesses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Businesses.swift; sourceTree = "<group>"; };
+		DE2B237C268D483400755ECD /* Autocomplete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Autocomplete.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +87,8 @@
 		DE2B2350268D415000755ECD /* yelpProject */ = {
 			isa = PBXGroup;
 			children = (
+				DE2B2379268D473700755ECD /* Models */,
+				DE2B2376268D42FE00755ECD /* Services */,
 				DE2B2351268D415000755ECD /* AppDelegate.swift */,
 				DE2B2353268D415000755ECD /* SceneDelegate.swift */,
 				DE2B2355268D415000755ECD /* ViewController.swift */,
@@ -100,6 +108,23 @@
 				DE2B236D268D415700755ECD /* Info.plist */,
 			);
 			path = yelpProjectTests;
+			sourceTree = "<group>";
+		};
+		DE2B2376268D42FE00755ECD /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				DE2B2377268D430E00755ECD /* RestAPIManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		DE2B2379268D473700755ECD /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				DE2B237A268D474700755ECD /* Businesses.swift */,
+				DE2B237C268D483400755ECD /* Autocomplete.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -203,10 +228,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE2B2378268D430E00755ECD /* RestAPIManager.swift in Sources */,
 				DE2B2356268D415000755ECD /* ViewController.swift in Sources */,
 				DE2B235C268D415000755ECD /* yelpProject.xcdatamodeld in Sources */,
 				DE2B2352268D415000755ECD /* AppDelegate.swift in Sources */,
 				DE2B2354268D415000755ECD /* SceneDelegate.swift in Sources */,
+				DE2B237B268D474700755ECD /* Businesses.swift in Sources */,
+				DE2B237D268D483400755ECD /* Autocomplete.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
