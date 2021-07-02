@@ -35,28 +35,28 @@ class YelpService {
     
     func getBusinessList(searchText: String, onSuccess: @escaping (Businesses) -> Void, onFailure: @escaping (Error) -> Void) {
         
-        var lat: CLLocationDegrees?
-        var lon: CLLocationDegrees?
+        let lat: CLLocationDegrees = 37.821950
+        let lon: CLLocationDegrees = -121.976690
         
-        LocationManager.sharedInstance.getUserLocation { (location) in
-            lat = location.coordinate.latitude
-            lon = location.coordinate.longitude
-        }
+//        LocationManager.sharedInstance.getUserLocation { (location) in
+//            lat = location.coordinate.latitude
+//            lon = location.coordinate.longitude
+//        }
         
-        if let lat = lat, let lon = lon {
-            let apiUrl = "/businesses/search?term=\(searchText)&latitude=\(lat)&longitude=\(lon)"
-            
-            RestAPIManager.sharedInstance.httpRequest(apiUrlString: apiUrl, onSuccess: { data -> Void in
-                do {
-                    let businesses = try JSONDecoder().decode(Businesses.self, from: data)
-                    onSuccess(businesses)
-                } catch {
-                    print("unexpected error: \(error).")
-                }
-            }, onFailure: { error -> Void in
-                onFailure(error)
-            })
-        }
+//        if let lat = lat, let lon = lon {
+        let apiUrl = "/businesses/search?term=\(searchText)&latitude=\(lat)&longitude=\(lon)"
+        
+        RestAPIManager.sharedInstance.httpRequest(apiUrlString: apiUrl, onSuccess: { data -> Void in
+            do {
+                let businesses = try JSONDecoder().decode(Businesses.self, from: data)
+                onSuccess(businesses)
+            } catch {
+                print("unexpected error: \(error).")
+            }
+        }, onFailure: { error -> Void in
+            onFailure(error)
+        })
+//        }
 
     }
     
