@@ -9,6 +9,8 @@
 import UIKit
 
 class BusinessMapController: UIViewController {
+    
+    var selectedBusinessId: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()

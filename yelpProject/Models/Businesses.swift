@@ -15,7 +15,7 @@ struct Businesses: Codable {
 
 struct Business: Codable {
     var rating: Double
-    var price: String
+    var price: String?
     var phone: String
     var id: String
     var categories: [Category]
@@ -41,8 +41,8 @@ struct BusinessLocation: Codable {
     var city: String
     var country: String
     var address1: String
-    var address2: String
-    var address3: String
+    var address2: String?
+    var address3: String?
     var state: String
     var zip_code: String
 }

@@ -21,6 +21,9 @@ class SearchBusinessesController: UIViewController {
     var autocompleteViewModel = AutcompleteViewModel()
     
     var searchTableView = UITableView()
+    
+    var searchTerm: String?
+    var selectedBusinessId: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +42,8 @@ class SearchBusinessesController: UIViewController {
         setUpScreen()
         
     }
+    
+    // MARK: - Setting UI elements on screen
     
     func setUpScreen() {
         
@@ -75,16 +80,16 @@ class SearchBusinessesController: UIViewController {
             searchTableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
-
-}
-
-extension SearchBusinessesController {
+    
+    // MARK: - Service API Calls
     
     func callGetAutocomplete(searchText: String) {
         
         YelpService.sharedInstance.getAutocomplete(searchText: searchText, latitude: currentLatitude, longitude: currentLongitude, onSuccess: { (autocomplete) in
             self.autocompleteViewModel.autocompleteTermsList = autocomplete.terms.map(AutocompleteTermViewModel.init)
             self.autocompleteViewModel.autocompleteBusinessList = autocomplete.businesses.map(AutocompleteBusinessViewModel.init)
+            
+            print(self.autocompleteViewModel.autocompleteTermsList)
             
             DispatchQueue.main.async {
                 self.searchTableView.reloadData()
@@ -94,20 +99,31 @@ extension SearchBusinessesController {
             print(error)
         }
     }
+    
+    // MARK: - Navigation
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "businessListSegue" {
+            let vc = segue.destination as! BusinessListController
+            vc.searchTerm = searchTerm
+        } else if segue.identifier == "businessMapSegue" {
+            let vc = segue.destination as! BusinessMapController
+            vc.selectedBusinessId = selectedBusinessId
+        }
+    }
 
 }
+
+// MARK: - Search bar delegate functions
 
 extension SearchBusinessesController: UISearchBarDelegate {
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        print("search bar is selected")
         searchBar.becomeFirstResponder()
-        
         DispatchQueue.main.async {
             self.searchTableView.isHidden = false
             self.searchBusinessLabel.isHidden = true
         }
-
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -115,27 +131,26 @@ extension SearchBusinessesController: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        // business list tableview controller segue
+        searchTerm = searchBar.text
+        self.performSegue(withIdentifier: "businessListSegue", sender: nil)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        print("search bar has been canceled")
         searchBar.resignFirstResponder()
         DispatchQueue.main.async {
             self.searchTableView.isHidden = true
             self.searchBusinessLabel.isHidden = false
         }
-
     }
     
 }
 
+// MARK: - Table view delegate functions
+
 extension SearchBusinessesController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        if autocompleteViewModel.autocompleteTermsList.count > 0 {
-            return 0
-        } else if autocompleteViewModel.autocompleteBusinessList.count > 0 {
+        if autocompleteViewModel.autocompleteBusinessList.count > 0 {
             return 2
         } else {
             return 1
@@ -173,12 +188,13 @@ extension SearchBusinessesController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         if indexPath.section == 0 {
-            // businesslist tableview controller segue
+            self.searchTerm = autocompleteViewModel.autocompleteTermsList[indexPath.row].term
+            self.performSegue(withIdentifier: "businessListSegue", sender: nil)
         } else {
-            // business map controller segue
+            self.selectedBusinessId = autocompleteViewModel.autocompleteBusinessList[indexPath.row].id
+            self.performSegue(withIdentifier: "businessMapSegue", sender: nil)
         }
     }
-    
     
 }
 

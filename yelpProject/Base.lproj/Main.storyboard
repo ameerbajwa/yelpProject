@@ -19,18 +19,18 @@
                     </view>
                     <navigationItem key="navigationItem" id="YD2-K8-o65"/>
                     <connections>
-                        <segue destination="QOG-X0-DqG" kind="show" id="cIo-xs-mEE"/>
-                        <segue destination="HkV-Q8-tVD" kind="show" id="zbD-5A-HaJ"/>
+                        <segue destination="QOG-X0-DqG" kind="show" identifier="businessMapSegue" id="cIo-xs-mEE"/>
+                        <segue destination="HkV-Q8-tVD" kind="show" identifier="businessListSegue" id="zbD-5A-HaJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1042.0289855072465" y="115.84821428571428"/>
         </scene>
-        <!--View Controller-->
+        <!--Business Map Controller-->
         <scene sceneID="gZv-9V-PZa">
             <objects>
-                <viewController id="QOG-X0-DqG" sceneMemberID="viewController">
+                <viewController id="QOG-X0-DqG" customClass="BusinessMapController" customModule="yelpProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="YI3-lY-azq">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -43,10 +43,10 @@
             </objects>
             <point key="canvasLocation" x="2176.8115942028985" y="574.55357142857144"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Business List Controller-->
         <scene sceneID="9La-37-e4D">
             <objects>
-                <tableViewController id="HkV-Q8-tVD" sceneMemberID="viewController">
+                <tableViewController id="HkV-Q8-tVD" customClass="BusinessListController" customModule="yelpProject" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="upI-aD-rQk">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -68,7 +68,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="xDw-F4-tPJ"/>
                     <connections>
-                        <segue destination="QOG-X0-DqG" kind="show" id="lOU-jw-K58"/>
+                        <segue destination="QOG-X0-DqG" kind="show" identifier="businessListToMapSegue" id="lOU-jw-K58"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f2X-AR-yrD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -95,6 +95,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="cIo-xs-mEE"/>
+        <segue reference="lOU-jw-K58"/>
     </inferredMetricsTieBreakers>
 </document>

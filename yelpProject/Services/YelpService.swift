@@ -43,8 +43,10 @@ class YelpService {
 //            lon = location.coordinate.longitude
 //        }
         
+        let preparedSearchText = searchText.replacingOccurrences(of: " ", with: "%20")
+        
 //        if let lat = lat, let lon = lon {
-        let apiUrl = "/businesses/search?term=\(searchText)&latitude=\(lat)&longitude=\(lon)"
+        let apiUrl = "/businesses/search?term=\(preparedSearchText)&latitude=\(lat)&longitude=\(lon)"
         
         RestAPIManager.sharedInstance.httpRequest(apiUrlString: apiUrl, onSuccess: { data -> Void in
             do {
