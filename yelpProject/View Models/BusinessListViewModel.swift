@@ -7,33 +7,54 @@
 //
 
 import Foundation
+import CoreLocation
 
 struct BusinessListViewModel {
-    var businessList: [BusinessViewModel]
+    var businessList: [BusinessListItemViewModel]
     
     init() {
-        self.businessList = [BusinessViewModel]()
+        self.businessList = [BusinessListItemViewModel]()
     }
     
 }
 
-struct BusinessViewModel {
-    let business: Business
+struct BusinessListItemViewModel {
+    var business: BusinessListItem
+    
+    init(business: BusinessListItem) {
+        self.business = business
+    }
     
     var id: String {
-        return business.id
+        if let safeId = business.id {
+            return safeId
+        } else {
+            return "-"
+        }
     }
     
     var name: String {
-        return business.name
+        if let safeName = business.name {
+            return safeName
+        } else {
+            return "Business Name: -"
+        }
     }
     
     var phone: String {
-        return business.phone
+        if let safePhone = business.phone {
+            return safePhone
+        } else {
+            return "No Phone Number"
+        }
     }
     
     var rating: String {
-        return "Rating: \(business.rating)"
+        if let safeRating = business.rating {
+            return "Rating: \(safeRating)"
+        } else {
+            return "Rating: -"
+        }
     }
     
     var price: String {
@@ -42,27 +63,52 @@ struct BusinessViewModel {
     
     var address: String {
         var formingAddress: String = ""
-        formingAddress = business.location.address1
-        if let address2 = business.location.address2 {
-            formingAddress.append(contentsOf: " \(address2)")
+        formingAddress = "\(business.location?.address1 ?? "-") "
+        if let address2 = business.location?.address2 {
+            if address2 != "" {
+                formingAddress.append(contentsOf: "\(address2) ")
+            }
         }
-        if let address3 = business.location.address3 {
-            formingAddress.append(contentsOf: " \(address3)")
+        if let address3 = business.location?.address3 {
+            if address3 != "" {
+                formingAddress.append(contentsOf: "\(address3) ")
+            }
         }
-        formingAddress.append(contentsOf: " \(business.location.city) \(business.location.state) \(business.location.zip_code)")
+        if let safeCity = business.location?.city {
+            formingAddress.append(contentsOf: safeCity)
+        }
+        if let safeState = business.location?.state {
+            formingAddress.append(contentsOf: " \(safeState)")
+        }
+        if let safeZip = business.location?.zip_code {
+            formingAddress.append(contentsOf: " \(safeZip)")
+        }
+//        formingAddress.append(contentsOf: "\(business.location?.city) \(business.location?.state) \(business.location?.zip_code)")
         return formingAddress
     }
     
-    var latitude: Double {
-        return business.coordinates.latitude
+    var location: CLLocationCoordinate2D {
+        if let lat = business.coordinates?.latitude, let lon = business.coordinates?.longitude {
+            return CLLocationCoordinate2D(latitude: lat, longitude: lon)
+        } else {
+            return CLLocationCoordinate2D(latitude: 0, longitude: 0)
+        }
     }
     
-    var longitude: Double {
-        return business.coordinates.longitude
-    }
+//    var latitude: Double {
+//        return business.coordinates?.latitude
+//    }
+//
+//    var longitude: Double {
+//        return business.coordinates?.longitude
+//    }
     
     var imageUrl: String {
-        return business.image_url
+        if let safeImageUrl = business.image_url {
+            return safeImageUrl
+        } else {
+            return "no image url"
+        }
     }
     
     func setImage(stringUrl: String) -> Data? {

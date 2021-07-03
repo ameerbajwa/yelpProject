@@ -10,23 +10,11 @@ import UIKit
 
 class BusinessListCell: UITableViewCell {
 
-    var businessImageView = UIImageView()
-    var businessNameLabel = UILabel()
-    var businessAddressLabel = UILabel()
-    var businessRatingLabel = UILabel()
-    var businessPriceLabel = UILabel()
-    var businessPhoneNumberLabel = UILabel()
+    let businessView = BusinessView()
     
-    var ratingPriceStackView = UIStackView()
-    
-    var businessViewModel: BusinessViewModel! {
+    var businessListItemViewModel: BusinessListItemViewModel! {
         didSet {
-            businessNameLabel.text = businessViewModel.name
-            businessAddressLabel.text = businessViewModel.address
-            businessPhoneNumberLabel.text = businessViewModel.phone
-            businessRatingLabel.text = businessViewModel.rating
-            businessPriceLabel.text = businessViewModel.price
-            businessImageView.image = UIImage(data: businessViewModel.setImage(stringUrl: businessViewModel.imageUrl)!)
+            businessView.businessListItemViewModel = businessListItemViewModel
         }
     }
     
@@ -52,65 +40,16 @@ class BusinessListCell: UITableViewCell {
     }
     
     func cellSetUp() {
-        
-        self.contentView.addSubview(businessImageView)
-        businessImageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        businessNameLabel.font = UIFont.boldSystemFont(ofSize: 18)
-        businessNameLabel.numberOfLines = 0
-        
-        self.contentView.addSubview(businessNameLabel)
-        businessNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        businessAddressLabel.font = UIFont.systemFont(ofSize: 14)
-        businessAddressLabel.textColor = .darkGray
-        businessAddressLabel.numberOfLines = 0
-        
-        self.contentView.addSubview(businessAddressLabel)
-        businessAddressLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        businessPhoneNumberLabel.font = UIFont.systemFont(ofSize: 14)
-        
-        self.contentView.addSubview(businessPhoneNumberLabel)
-        businessPhoneNumberLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        businessRatingLabel.font = UIFont.systemFont(ofSize: 14)
-        businessPriceLabel.font = UIFont.systemFont(ofSize: 14)
-        
-        ratingPriceStackView.axis = .horizontal
-        ratingPriceStackView.spacing = 5.0
-        ratingPriceStackView.distribution = .fillEqually
-        
-        ratingPriceStackView.addArrangedSubview(businessRatingLabel)
-        ratingPriceStackView.addArrangedSubview(businessPriceLabel)
-        
-        self.contentView.addSubview(ratingPriceStackView)
-        ratingPriceStackView.translatesAutoresizingMaskIntoConstraints = false
+        businessView.setUpConstraints()
+        self.contentView.addSubview(businessView)
+        businessView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            businessImageView.topAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.topAnchor, constant: 20.0),
-            businessImageView.leadingAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.leadingAnchor, constant: 20.0),
-            businessImageView.trailingAnchor.constraint(equalTo: businessNameLabel.leadingAnchor, constant: -20.0),
-            businessImageView.heightAnchor.constraint(equalToConstant: 75.0),
-            businessImageView.widthAnchor.constraint(equalToConstant: 75.0),
-            
-            businessNameLabel.topAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.topAnchor, constant: 20.0),
-            businessNameLabel.trailingAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.trailingAnchor, constant: -5.0),
-            
-            businessAddressLabel.topAnchor.constraint(equalTo: businessNameLabel.bottomAnchor, constant: 5.0),
-            businessAddressLabel.leadingAnchor.constraint(equalTo: businessImageView.trailingAnchor, constant: 20.0),
-            businessAddressLabel.trailingAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.trailingAnchor, constant: -5.0),
-            
-            businessPhoneNumberLabel.topAnchor.constraint(equalTo: businessAddressLabel.bottomAnchor, constant: 5.0),
-            businessPhoneNumberLabel.leadingAnchor.constraint(equalTo: businessImageView.trailingAnchor, constant: 20.0),
-            businessPhoneNumberLabel.trailingAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.trailingAnchor, constant: -5.0),
-            
-            ratingPriceStackView.topAnchor.constraint(equalTo: businessPhoneNumberLabel.bottomAnchor, constant: 5.0),
-            ratingPriceStackView.leadingAnchor.constraint(equalTo: businessImageView.trailingAnchor, constant: 20.0),
-            ratingPriceStackView.trailingAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.trailingAnchor, constant: -5.0),
-            ratingPriceStackView.bottomAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.bottomAnchor, constant: -10.0)
+            businessView.topAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.topAnchor),
+            businessView.leadingAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.leadingAnchor),
+            businessView.trailingAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.trailingAnchor),
+            businessView.bottomAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.bottomAnchor)
         ])
-        
     }
 
 }

@@ -7,25 +7,32 @@
 //
 
 import UIKit
+import CoreLocation
 
 class BusinessListController: UITableViewController {
 
+    var spinnerView = SpinnerView()
     var searchTerm: String?
     
     var businessListViewModel = BusinessListViewModel()
+    var selectedBusinessId: String?
+    var userLocation: CLLocationCoordinate2D?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        DispatchQueue.main.async {
+            self.spinnerView.createSpinnerView(view: self.view)
+        }
+        
         self.tableView.register(BusinessListCell.self, forCellReuseIdentifier: "businessListCell")
         
-        if let safeSearchTerm = searchTerm {
-            YelpService.sharedInstance.getBusinessList(searchText: safeSearchTerm, onSuccess: { (businesses) in
-                self.businessListViewModel.businessList = businesses.businesses.map(BusinessViewModel.init)
-                
-                print(self.businessListViewModel.businessList)
-                
+        if let safeSearchTerm = searchTerm, let currentLatitude = userLocation?.latitude, let currentLongitude = userLocation?.longitude {
+            YelpService.sharedInstance.getBusinessList(searchText: safeSearchTerm, latitude: currentLatitude, longitude: currentLongitude, onSuccess: { (businesses) in
+                self.businessListViewModel.businessList = businesses.businesses.map(BusinessListItemViewModel.init)
+                                
                 DispatchQueue.main.async {
+                    self.spinnerView.dismissSpinnerView()
                     self.tableView.reloadData()
                 }
             }) { (error) in
@@ -53,22 +60,26 @@ class BusinessListController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "businessListCell", for: indexPath) as? BusinessListCell
-        cell?.businessViewModel = businessListViewModel.businessList[indexPath.row]
+        cell?.businessListItemViewModel = businessListViewModel.businessList[indexPath.row]
         return cell!
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
+        self.selectedBusinessId = businessListViewModel.businessList[indexPath.row].id
+//        self.businessViewModel = businessListViewModel.businessList[indexPath.row]
+        self.performSegue(withIdentifier: "businessListToMapSegue", sender: nil)
     }
 
-    /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "businessListToMapSegue" {
+            let vc = segue.destination as! BusinessMapController
+            vc.userLocation = userLocation
+            vc.selectedBusinessId = selectedBusinessId
+        }
     }
-    */
 
 }

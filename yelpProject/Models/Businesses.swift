@@ -10,39 +10,39 @@ import Foundation
 
 struct Businesses: Codable {
     var total: Int
-    var businesses: [Business]
+    var businesses: [BusinessListItem]
 }
 
-struct Business: Codable {
-    var rating: Double
+struct BusinessListItem: Codable {
+    var rating: Double?
     var price: String?
-    var phone: String
-    var id: String
-    var categories: [Category]
-    var review_count: Int
-    var name: String
-    var url: String
-    var coordinates: BusinessCoordinates
-    var image_url: String
-    var location: BusinessLocation
+    var phone: String?
+    var id: String?
+    var categories: [Category]?
+    var review_count: Int?
+    var name: String?
+    var url: String?
+    var coordinates: BusinessListItemCoordinates?
+    var image_url: String?
+    var location: BusinessListItemLocation?
 }
 
 struct Category: Codable {
-    var alias: String
-    var title: String
+    var alias: String?
+    var title: String?
 }
 
-struct BusinessCoordinates: Codable {
-    var latitude: Double
-    var longitude: Double
+struct BusinessListItemCoordinates: Codable {
+    var latitude: Double?
+    var longitude: Double?
 }
 
-struct BusinessLocation: Codable {
-    var city: String
-    var country: String
-    var address1: String
+struct BusinessListItemLocation: Codable {
+    var city: String?
+    var country: String?
+    var address1: String?
     var address2: String?
     var address3: String?
-    var state: String
-    var zip_code: String
+    var state: String?
+    var zip_code: String?
 }

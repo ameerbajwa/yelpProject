@@ -21,6 +21,8 @@
 		DE2B2381268E06F700755ECD /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2B2380268E06F600755ECD /* APIKey.swift */; };
 		DE2B2387268E18DC00755ECD /* SearchBusinessesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2B2386268E18DC00755ECD /* SearchBusinessesController.swift */; };
 		DE2B2389268E2D6C00755ECD /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2B2388268E2D6C00755ECD /* LocationManager.swift */; };
+		DE613BFC268FD5B30025D157 /* BusinessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE613BFB268FD5B30025D157 /* BusinessView.swift */; };
+		DE613C012690EABE0025D157 /* SpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE613C002690EABE0025D157 /* SpinnerView.swift */; };
 		DE808F72268E733B0060C718 /* AutocompleteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE808F71268E733B0060C718 /* AutocompleteViewModel.swift */; };
 		DE808F76268E8A690060C718 /* BusinessMapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE808F75268E8A690060C718 /* BusinessMapController.swift */; };
 		DE808F7C268E930A0060C718 /* BusinessListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE808F7B268E930A0060C718 /* BusinessListController.swift */; };
@@ -57,6 +59,8 @@
 		DE2B2380268E06F600755ECD /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		DE2B2386268E18DC00755ECD /* SearchBusinessesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBusinessesController.swift; sourceTree = "<group>"; };
 		DE2B2388268E2D6C00755ECD /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		DE613BFB268FD5B30025D157 /* BusinessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessView.swift; sourceTree = "<group>"; };
+		DE613C002690EABE0025D157 /* SpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
 		DE808F71268E733B0060C718 /* AutocompleteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteViewModel.swift; sourceTree = "<group>"; };
 		DE808F75268E8A690060C718 /* BusinessMapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessMapController.swift; sourceTree = "<group>"; };
 		DE808F7B268E930A0060C718 /* BusinessListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessListController.swift; sourceTree = "<group>"; };
@@ -170,7 +174,9 @@
 		DE2B238A268E3E0F00755ECD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DE613C002690EABE0025D157 /* SpinnerView.swift */,
 				DE808F7D268E937B0060C718 /* BusinessListCell.swift */,
+				DE613BFB268FD5B30025D157 /* BusinessView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -284,8 +290,10 @@
 				DE2B2352268D415000755ECD /* AppDelegate.swift in Sources */,
 				DE2B2354268D415000755ECD /* SceneDelegate.swift in Sources */,
 				DE808F7E268E937B0060C718 /* BusinessListCell.swift in Sources */,
+				DE613C012690EABE0025D157 /* SpinnerView.swift in Sources */,
 				DE2B2387268E18DC00755ECD /* SearchBusinessesController.swift in Sources */,
 				DE808F82268E94180060C718 /* BusinessListViewModel.swift in Sources */,
+				DE613BFC268FD5B30025D157 /* BusinessView.swift in Sources */,
 				DE2B237B268D474700755ECD /* Businesses.swift in Sources */,
 				DE2B237D268D483400755ECD /* Autocomplete.swift in Sources */,
 				DE808F72268E733B0060C718 /* AutocompleteViewModel.swift in Sources */,

@@ -11,9 +11,7 @@ import CoreLocation
 
 class SearchBusinessesController: UIViewController {
     
-//    var locationManager: CLLocationManager!
-    var currentLatitude: CLLocationDegrees = 37.821950
-    var currentLongitude: CLLocationDegrees = -121.976690
+    var currentLocationCoordinates: CLLocationCoordinate2D?
     
     var searchBusinessLabel = UILabel()
     var businessSearchBar = UISearchBar()
@@ -21,6 +19,7 @@ class SearchBusinessesController: UIViewController {
     var autocompleteViewModel = AutcompleteViewModel()
     
     var searchTableView = UITableView()
+    var spinnerView = SpinnerView()
     
     var searchTerm: String?
     var selectedBusinessId: String?
@@ -28,14 +27,13 @@ class SearchBusinessesController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        LocationManager.sharedInstance.getUserLocation { (location) in
-//            print(location.coordinate.latitude)
-//            print(location.coordinate.longitude)
-//            self.currentLatitude = location.coordinate.latitude
-//            self.currentLongitude = location.coordinate.longitude
-//        }
+        LocationManager.sharedInstance.getUserLocation { (location) in
+            self.currentLocationCoordinates = location.coordinate
+            print(location.coordinate)
+        }
         
         businessSearchBar.delegate = self
+        businessSearchBar.showsCancelButton = true
         searchTableView.delegate = self
         searchTableView.dataSource = self
         
@@ -85,19 +83,40 @@ class SearchBusinessesController: UIViewController {
     
     func callGetAutocomplete(searchText: String) {
         
-        YelpService.sharedInstance.getAutocomplete(searchText: searchText, latitude: currentLatitude, longitude: currentLongitude, onSuccess: { (autocomplete) in
-            self.autocompleteViewModel.autocompleteTermsList = autocomplete.terms.map(AutocompleteTermViewModel.init)
-            self.autocompleteViewModel.autocompleteBusinessList = autocomplete.businesses.map(AutocompleteBusinessViewModel.init)
-            
-            print(self.autocompleteViewModel.autocompleteTermsList)
+        if searchText == "" {
+            self.autocompleteViewModel.autocompleteTermsList = []
+            self.autocompleteViewModel.autocompleteBusinessList = []
             
             DispatchQueue.main.async {
                 self.searchTableView.reloadData()
             }
             
-        }) { (error) in
-            print(error)
+        } else {
+            
+            DispatchQueue.main.async {
+                self.spinnerView.createSpinnerView(view: self.view)
+            }
+            
+            if let currentLatitude = currentLocationCoordinates?.latitude, let currentLongitude = currentLocationCoordinates?.longitude {
+                
+                YelpService.sharedInstance.getAutocomplete(searchText: searchText, latitude: currentLatitude, longitude: currentLongitude, onSuccess: { (autocomplete) in
+                    
+                    self.autocompleteViewModel.autocompleteTermsList = autocomplete.terms.map(AutocompleteTermViewModel.init)
+                    self.autocompleteViewModel.autocompleteBusinessList = autocomplete.businesses.map(AutocompleteBusinessViewModel.init)
+                                        
+                    DispatchQueue.main.async {
+                        self.spinnerView.dismissSpinnerView()
+                        self.searchTableView.reloadData()
+                    }
+                    
+                }) { (error) in
+                    print(error)
+                }
+                
+            }
+            
         }
+
     }
     
     // MARK: - Navigation
@@ -106,9 +125,11 @@ class SearchBusinessesController: UIViewController {
         if segue.identifier == "businessListSegue" {
             let vc = segue.destination as! BusinessListController
             vc.searchTerm = searchTerm
+            vc.userLocation = currentLocationCoordinates
         } else if segue.identifier == "businessMapSegue" {
             let vc = segue.destination as! BusinessMapController
             vc.selectedBusinessId = selectedBusinessId
+            vc.userLocation = currentLocationCoordinates
         }
     }
 
@@ -120,13 +141,12 @@ extension SearchBusinessesController: UISearchBarDelegate {
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.becomeFirstResponder()
-        DispatchQueue.main.async {
-            self.searchTableView.isHidden = false
-            self.searchBusinessLabel.isHidden = true
-        }
+        self.searchTableView.isHidden = false
+        self.searchBusinessLabel.isHidden = true
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print(searchText)
         callGetAutocomplete(searchText: searchText)
     }
     
@@ -137,10 +157,8 @@ extension SearchBusinessesController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        DispatchQueue.main.async {
-            self.searchTableView.isHidden = true
-            self.searchBusinessLabel.isHidden = false
-        }
+        self.searchTableView.isHidden = true
+        self.searchBusinessLabel.isHidden = false
     }
     
 }
