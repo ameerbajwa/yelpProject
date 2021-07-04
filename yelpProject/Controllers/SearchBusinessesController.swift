@@ -146,7 +146,6 @@ extension SearchBusinessesController: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
         callGetAutocomplete(searchText: searchText)
     }
     

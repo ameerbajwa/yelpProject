@@ -83,7 +83,6 @@ struct BusinessListItemViewModel {
         if let safeZip = business.location?.zip_code {
             formingAddress.append(contentsOf: " \(safeZip)")
         }
-//        formingAddress.append(contentsOf: "\(business.location?.city) \(business.location?.state) \(business.location?.zip_code)")
         return formingAddress
     }
     
@@ -94,14 +93,6 @@ struct BusinessListItemViewModel {
             return CLLocationCoordinate2D(latitude: 0, longitude: 0)
         }
     }
-    
-//    var latitude: Double {
-//        return business.coordinates?.latitude
-//    }
-//
-//    var longitude: Double {
-//        return business.coordinates?.longitude
-//    }
     
     var imageUrl: String {
         if let safeImageUrl = business.image_url {
